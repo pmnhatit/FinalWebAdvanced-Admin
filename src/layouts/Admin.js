@@ -22,8 +22,8 @@ import AddAdmin from "../views/AddAdmin/AddAdmin";
 
 let ps;
 
-const user = JSON.parse(localStorage.getItem('user'));
-console.log("userinfo1:"+user);
+// const user = JSON.parse(localStorage.getItem('user'));
+// console.log("userinfo1:"+user);
 // console.log("auth1:"+user.auth);
 
 
@@ -104,23 +104,9 @@ export default function Admin({ ...rest }) {
       window.removeEventListener("resize", resizeFunction);
     };
   }, []);
-  // const user = JSON.parse(localStorage.getItem('user'));
-  // console.log("userinfo2:"+user);
-  // console.log("auth: "+user.auth);
   const switchRoutes = (
     <Switch>
       {arrayRoutes.map((prop, key) => {
-        // if(user.auth==="2"){
-        //   if (prop.layout === "/admin" && prop.path!=="/addadmin") {
-        //     return (
-        //       <Route
-        //         path={prop.layout + prop.path}
-        //         component={prop.component}
-        //         key={key}
-        //       />
-        //     );
-        //   }
-        // }else {
           if (prop.layout === "/admin" ) {
             return (
               <Route
@@ -133,7 +119,7 @@ export default function Admin({ ...rest }) {
        // } 
         return null;
       })}
-      <Redirect from="/admin" to="/admin/home" />
+      {/* <Redirect from="/admin" to="/admin/home" /> */}
     </Switch>
   );
   console.log("in return:"+newRoutes);

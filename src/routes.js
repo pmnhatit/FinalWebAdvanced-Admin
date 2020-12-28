@@ -28,17 +28,11 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import BlockIcon from '@material-ui/icons/Block';
 import CommentIcon from '@material-ui/icons/Comment';
 // core components/views for Admin layout
-import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
 import Typography from "views/Typography/Typography.js";
-import Icons from "views/Icons/Icons.js";
-import Maps from "views/Maps/Maps.js";
-import NotificationsPage from "views/Notifications/Notifications.js";
-import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
-import AddAdmin from "views/AddAdmin/AddAdmin";
+import ListUser from "./views/ListUser/ListUser";
 // core components/views for RTL layout
-import RTLPage from "views/RTLPage/RTLPage.js";
 
 const user = JSON.parse(localStorage.getItem('user'));
   console.log("userinfoRoute:"+user);
@@ -46,15 +40,15 @@ const user = JSON.parse(localStorage.getItem('user'));
 
 const dashboardRoutes = [
   {
-    path: "/dashboard",
+    path: "/users",
     name: "User management",
     rtlName: "لوحة القيادة",
     icon: Person,
-    component: DashboardPage,
+    component: ListUser,
     layout: "/admin"
   },
   {
-    path: "/user",
+    path: "/block",
     name: "Block/Unblock",
     rtlName: "ملف تعريفي للمستخدم",
     icon: BlockIcon,
@@ -87,14 +81,6 @@ const dashboardRoutes = [
   //   layout: "/admin"
   // },
   // {
-  //   path: "/maps",
-  //   name: "Maps",
-  //   rtlName: "خرائط",
-  //   icon: LocationOn,
-  //   component: Maps,
-  //   layout: "/admin"
-  // },
-  // {
   //   path: "/notifications",
   //   name: "Notifications",
   //   rtlName: "إخطارات",
@@ -102,36 +88,6 @@ const dashboardRoutes = [
   //   component: NotificationsPage,
   //   layout: "/admin"
   // },
-  // {
-  //   path: "/rtl-page",
-  //   name: "RTL Support",
-  //   rtlName: "پشتیبانی از راست به چپ",
-  //   icon: Language,
-  //   component: RTLPage,
-  //   layout: "/rtl"
-  // },
-  // {
-  //   path: "/upgrade-to-pro",
-  //   name: "Upgrade To PRO",
-  //   rtlName: "التطور للاحترافية",
-  //   icon: Unarchive,
-  //   component: UpgradeToPro,
-  //   layout: "/admin"
-  // },
   
 ];
-// let newDashboardRoutes = dashboardRoutes;
-// if(user.auth==="1"|| false){
-//   const newRoute=[
-//     {
-//       path: "/addadmin",
-//       name: "Create Admin",
-//       icon: PersonAddIcon,
-//       component: AddAdmin,
-//       layout: "/admin"
-//     },
-//   ];
-//   newDashboardRoutes = dashboardRoutes.concat(newRoute);
-// }
-
 export default dashboardRoutes;
