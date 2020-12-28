@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -7,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 
 
 
@@ -32,52 +33,50 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function AddAdmin() {
+export default function Profile() {
   const classes = useStyles();
 
   //info user
+  const user = JSON.parse(localStorage.getItem('user')); 
   const token = JSON.parse(localStorage.getItem('token'));
   console.log(token);
-  const [username, setUsername] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const [fullName, setFullName] = useState(user.name);
+  const [phone, setPhone] = useState(user.phone);
+  const [email, setEmail] = useState(user.email);
   const history = useHistory();
 
   
 
-  const editUser = async () => {
-    const res = await fetch("https://apiadmin-caro.herokuapp.com/user/addadmin", {
-      // const res = await fetch("http://localhost:3000/admin/addadmin", {
-      method: 'POST',
+  const editProfile = async () => {
+    console.log(token);
+    // const res = await fetch("https://apiadmin-caro.herokuapp.com/user/edit", {
+    const res = await fetch("https://apiadmin-caro.herokuapp.com/admin/edit", {
+      method: 'PUT',
       headers: {
         Authorization: 'Bearer ' + `${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: fullName,
-        phone: phone,
-        username: username,
+        id:user.id,
+        name:fullName,
+        phone:phone,
         email: email
       }),
     })
     if(res.status===200){
-        
-        setFullName("");
-        setEmail("");
-        setPhone("");
-        setUsername("");
-        alert("Add success!");
-        // history.push('/addadmin');
-      }else{
         const result = await res.json();
-        alert(result.message);
+        console.log(result);
+        // localStorage.setItem('token',JSON.stringify(result.token));
+        localStorage.setItem('user',JSON.stringify(result.infoUser));
+        history.push('/admin/home');
+      }else{
+        alert(res.message);
       }
   }
 
   const handleSubmit = (e) =>{
     e.preventDefault();
-    editUser();
+    editProfile();
   };
 
   const handleChange = (e) =>{
@@ -85,10 +84,8 @@ export default function AddAdmin() {
       setFullName(e.target.value);
     }else if(e.target.id==="phone"){
         setPhone(e.target.value);
-    }else if(e.target.id==="username"){
-        setUsername(e.target.value);
     }else if(e.target.id==="email"){
-        setEmail(e.target.value);
+      setEmail(e.target.value);
     }
   }
 
@@ -97,7 +94,7 @@ export default function AddAdmin() {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Create New Admin
+          Edit Infomation
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
@@ -107,17 +104,17 @@ export default function AddAdmin() {
             id="name"
             label="Full Name"
             name="name"
-            value={fullName}
+            defaultValue={user.name}
             onChange={handleChange}
           />
           <TextField
             variant="outlined"
             margin="normal"
             fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            value={username}
+            id="email"
+            label="Email"
+            name="email"
+            defaultValue={user.email}
             onChange={handleChange}
           />
           <TextField
@@ -127,18 +124,7 @@ export default function AddAdmin() {
             id="phone"
             label="Phone Number"
             name="phone"
-            value={phone}
-            onChange={handleChange}
-  ></TextField>
-          
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            id="email"
-            label="Email"
-            name="email"
-            value={email}
+            defaultValue={user.phone}
             onChange={handleChange}
           />
           <Button
@@ -148,7 +134,7 @@ export default function AddAdmin() {
             color="primary"
             className={classes.submit}
           >
-            ADD
+            Edit
           </Button>
         </form>
       </div>

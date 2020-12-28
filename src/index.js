@@ -22,9 +22,9 @@ import { Router, Route, Switch, Redirect } from "react-router-dom";
 
 // core components
 import Admin from "layouts/Admin.js";
-import RTL from "layouts/RTL.js";
-import SignIn from "components/SignIn/SignIn";
-import Profile from "./components/Profile/EditProfile";
+import SignIn from "./views/SignIn/SignIn";
+import Profile from "./views/Profile/EditProfile";
+import UserDetails from "./views/UserDetails/UserDetails";
 
 import "assets/css/material-dashboard-react.css?v=1.9.0";
 
@@ -35,8 +35,8 @@ ReactDOM.render(
     <Switch>
       <Route path="/" exact component={SignIn}/>
       <Route path="/profile" component={Profile}/>
+      <Route path="/userdetails/:id" exact component={UserDetails}/>
       <Route path="/admin" component={Admin} />
-      <Route path="/rtl" component={RTL} />
       {/* <Redirect from="/" to="/admin/dashboard" /> */}
     </Switch>
   </Router>,

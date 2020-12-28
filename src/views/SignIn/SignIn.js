@@ -3,12 +3,13 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-// import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {useHistory, useParams} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 
 
 
@@ -30,61 +31,59 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  item:{
+    display: 'flex',
+    justifyItems: 'center', 
+    margin:5
+  }
 }));
 
 
-export default function Profile() {
+
+export default function SignIn() {
   const classes = useStyles();
 
-  //info user
-  const user = JSON.parse(localStorage.getItem('user')); 
-  const token = JSON.parse(localStorage.getItem('token'));
-  console.log(token);
-  const [fullName, setFullName] = useState(user.name);
-  const [phone, setPhone] = useState(user.phone);
-  const [email, setEmail] = useState(user.email);
+  const [userName, setUserName] = useState("");
+  const [passWord, setPassWord] = useState("");
+  const [isSignIn, setIsSignIn] = useState(null);
   const history = useHistory();
 
-  
-
-  const editProfile = async () => {
-    console.log(token);
-    const res = await fetch("https://apiadmin-caro.herokuapp.com/user/edit", {
-      method: 'PUT',
+  const signIn = async () => {
+    
+    const res = await fetch("https://apiadmin-caro.herokuapp.com/admin/signin", {
+    // const res = await fetch("http://localhost:3000/admin/signin", {
+      method: 'POST',
       headers: {
-        Authorization: 'Bearer ' + `${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id:user.id,
-        name:fullName,
-        phone:phone,
-        email: email
+        username:userName,
+        password:passWord
       }),
     })
     if(res.status===200){
-        const result = await res.json();
-        console.log(result);
-        // localStorage.setItem('token',JSON.stringify(result.token));
-        localStorage.setItem('user',JSON.stringify(result.infoUser));
-        history.push('/admin/home');
-      }else{
-        alert(res.message);
-      }
+      const result = await res.json();
+      console.log(result);
+      localStorage.setItem('token',JSON.stringify(result.token));
+      localStorage.setItem('user',JSON.stringify(result.infoUser));
+      history.push('/admin/users');
+    }else{
+      setIsSignIn("Username or password invalid!");
+    }
   }
 
   const handleSubmit = (e) =>{
     e.preventDefault();
-    editProfile();
+    signIn();
   };
 
+  const setError = (isSignIn===null) ? <></> : <div style={{color: 'red'}}>{isSignIn}</div>;
+
   const handleChange = (e) =>{
-    if(e.target.id==="name"){
-      setFullName(e.target.value);
-    }else if(e.target.id==="phone"){
-        setPhone(e.target.value);
-    }else if(e.target.id==="email"){
-      setEmail(e.target.value);
+    if(e.target.id==="username"){
+      setUserName(e.target.value);
+    }else if (e.target.id==="password"){
+      setPassWord(e.target.value);
     }
   }
 
@@ -92,50 +91,49 @@ export default function Profile() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
         <Typography component="h1" variant="h5">
-          Edit Infomation
+          Sign in
         </Typography>
-        <form className={classes.form} onSubmit={handleSubmit}>
+        <form className={classes.form} onSubmit={handleSubmit} Validate>
           <TextField
             variant="outlined"
             margin="normal"
+            required
             fullWidth
-            id="name"
-            label="Full Name"
-            name="name"
-            defaultValue={user.name}
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            autoFocus
             onChange={handleChange}
           />
           <TextField
             variant="outlined"
             margin="normal"
+            required
             fullWidth
-            id="email"
-            label="Email"
-            name="email"
-            defaultValue={user.email}
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
             onChange={handleChange}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            id="phone"
-            label="Phone Number"
-            name="phone"
-            defaultValue={user.phone}
-            onChange={handleChange}
-          />
+          
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            
           >
-            Edit
+            Sign In
           </Button>
         </form>
+        {setError}
       </div>
       <Box mt={8}>
       </Box>
