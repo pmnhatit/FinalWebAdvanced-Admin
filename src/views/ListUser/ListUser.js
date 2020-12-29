@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {useHistory} from 'react-router-dom';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import MUIDataTable from "mui-datatables";
 import Button from "@material-ui/core/Button";
 
@@ -72,22 +65,23 @@ export default function CustomizedTables() {
         console.log("Vo 200OK")
         const users = await res.json();
         console.log("user: "+users.users);
+        console.log("block: "+users.users[0].blocked);
         let data=[];
         for(let i=0;i<users.users.length;i++){
             data[i]={
               id: users.users[i].id,  
               email: users.users[i].email,
               name: users.users[i].name,
-              username: users.users[i].username
+              username: users.users[i].username,
             }
         }
         // setListUser(users.users);
         setListUser(data);
-        console.log("data"+data[0].name)
+        // console.log("data"+data[0].name)
         // console.log(listUser[0].name);
     }else{
         const result = await res.json();
-        // alert(result.message);
+        alert(result.message);
     }
   }
   getRes();
