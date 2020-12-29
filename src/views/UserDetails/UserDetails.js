@@ -8,8 +8,14 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useHistory, useParams} from 'react-router-dom';
-
-
+//dialog
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,30 +48,56 @@ export default function Profile() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  // const [status, setStatus] = useState("");
+  const [blocked, setBlocked] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
+  const [open, setOpen] = React.useState(false);
   const history = useHistory();
 
-  const handleChange = (e) =>{
-    if(e.target.id==="name"){
-      setFullName(e.target.value);
-    }else if(e.target.id==="phone"){
-        setPhone(e.target.value);
-    }else if(e.target.id==="email"){
-      setEmail(e.target.value);
-    }else if(e.target.id==="username"){
-      setUsername(e.target.value);
-    }
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const ChangeStatus = async () =>{
+    const res = await fetch("https://apiadmin-caro.herokuapp.com/user/changeblock", {
+      // const res = await fetch("http://localhost:3000/user/changeblock", {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + `${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: id,
+        blocked: !blocked,
+      }),
+    })
+    const result = await res.json();
+    if(res.status===200){
+        console.log("blocked: "+result.infoUser.blocked);
+        setBlocked(result.infoUser.blocked);
+      }else{
+        alert(result.message);
+      }
   }
 
-  const handleSubmit = (e) =>{
+  const handleConfirm = (e) =>{
     e.preventDefault();
-    // editProfile();
-  };
+    ChangeStatus();
+    setOpen(false);
+  }
 
 
   useEffect(() => {
     fetch("https://apiadmin-caro.herokuapp.com/user/infouser",{
+      // fetch("http://localhost:3000/user/infouser",{
       method: 'POST',
         headers: {
         Authorization: 'Bearer ' + `${token}`,
@@ -85,6 +117,8 @@ export default function Profile() {
           setFullName(result.infoUser.name);
           setEmail(result.infoUser.email);
           setPhone(result.infoUser.phone);
+          setBlocked(result.infoUser.blocked);
+          // console.log("blocked "+blocked)
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -95,12 +129,23 @@ export default function Profile() {
         }
       )
   }, [])
+  let status = "";
+  let text = "";
+  if(blocked){
+    status="Blocked";
+    text = "UnBlock";
+  }else{
+    status="Active"
+    text="Block";
+  }
+  blocked ? status="Blocked" : status="Active";
 
   if (error) {
     return <div>Error: {error.message}</div>;
   } else if (!isLoaded) {
     return <div>Loading...</div>;
   } else {
+    
     return (<>
       <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -108,7 +153,7 @@ export default function Profile() {
         <Typography component="h1" variant="h5">
           Edit Infomation
         </Typography>
-        <form className={classes.form} onSubmit={handleSubmit}>
+        <form className={classes.form} >
           <TextField
             variant="outlined"
             margin="normal"
@@ -117,7 +162,6 @@ export default function Profile() {
             label="Full Name"
             name="name"
             value={fullName}
-            onChange={handleChange}
             InputProps={{
               readOnly: true,
             }}
@@ -130,8 +174,6 @@ export default function Profile() {
             label="Username"
             name="username"
             value={username}
-            // disabled
-            onChange={handleChange}
             InputProps={{
               readOnly: true,
             }}
@@ -144,8 +186,6 @@ export default function Profile() {
             label="Email"
             name="email"
             value={email}
-            // disabled
-            onChange={handleChange}
             InputProps={{
               readOnly: true,
             }}
@@ -158,21 +198,55 @@ export default function Profile() {
             label="Phone Number"
             name="phone"
             value={phone}
-            // disabled
-            onChange={handleChange}
             InputProps={{
               readOnly: true,
             }}
+            
           />
-          {/* <Button
-            type="submit"
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="status"
+            label="Status"
+            name="status"
+            value={status}
+            InputProps={{
+              readOnly: true,
+            }}
+            
+          />
+          <Button
+            // type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleClickOpen}
           >
-            Edit
-          </Button> */}
+            {text}
+          </Button>
+          <Dialog
+        fullScreen={fullScreen}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">{"Block User"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure block this user?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirm} color="primary" autoFocus>
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
         </form>
       </div>
       <Box mt={8}>
@@ -180,71 +254,4 @@ export default function Profile() {
     </Container>
     </>);
   }
-  
- 
-
-  // useEffect(()  => {
-  //   const getRes = async ()  =>{
-  //     console.log("Goi API")
-  //   const res = await fetch("http://localhost:3000/user/infouser",{
-  //       method: 'POST',
-  //       headers: {
-  //       Authorization: 'Bearer ' + `${token}`,
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       id: id
-  //     }),
-  //   })
-  //   if(res.status===200){
-  //       console.log("Vo 200OK")
-  //       const user = await res.json();
-  //       console.log("user: "+user.infoUser);
-  //       console.log("username: "+user.infoUser.username);
-  //       // setListUser(users.users);
-  //       setIsLoaded(true);
-  //       setFullName(user.infoUser.name);
-  //       setInfoUser(user.infoUser);
-  //       console.log("state: "+infouser);
-  //       console.log("name: "+fullName);
-  //   }else{
-  //       const result = await res.json();
-  //       alert(result.message);
-  //   }
-  // }
-  // getRes();
-  // }, [fullName])
-
-  // const editProfile = async () => {
-  //   console.log(token);
-  //   // const res = await fetch("https://apiadmin-caro.herokuapp.com/user/edit", {
-  //   const res = await fetch("http://localhost:3000/user/infouser", {
-  //     method: 'GET',
-  //     headers: {
-  //       Authorization: 'Bearer ' + `${token}`,
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       id:user.id,
-  //       name:fullName,
-  //       phone:phone,
-  //       email: email
-  //     }),
-  //   })
-  //   if(res.status===200){
-  //       const result = await res.json();
-  //       console.log(result);
-  //       // localStorage.setItem('token',JSON.stringify(result.token));
-  //       localStorage.setItem('user',JSON.stringify(result.infoUser));
-  //       history.push('/admin/home');
-  //     }else{
-  //       alert(res.message);
-  //     }
-  // }
-
-  
-
-  // return (
-    
-  // );
 }
