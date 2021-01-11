@@ -25,6 +25,8 @@ import Admin from "layouts/Admin.js";
 import SignIn from "./views/SignIn/SignIn";
 import Profile from "./views/Profile/EditProfile";
 import UserDetails from "./views/UserDetails/UserDetails";
+import HistoryDetails from "./views/HistoryDetails/HistoryDetails";
+import UserHistories from "./components/ListHistoriesUser/ListHistoriesUser";
 
 import "assets/css/material-dashboard-react.css?v=1.9.0";
 
@@ -36,6 +38,8 @@ ReactDOM.render(
       <Route path="/" exact component={SignIn}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/userdetails/:id" exact component={UserDetails}/>
+      <Route path="/history/:id" exact component={HistoryDetails}/>
+      <Route path="/userhistories/:id" exact component={UserHistories}/>
       <Route path="/admin" component={Admin} />
       {/* <Redirect from="/" to="/admin/dashboard" /> */}
     </Switch>

@@ -32,6 +32,8 @@ import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
 import Typography from "views/Typography/Typography.js";
 import ListUser from "./views/ListUser/ListUser";
+import ListHistories from "./views/ListHistories/ListHistories";
+
 // core components/views for RTL layout
 
 const user = JSON.parse(localStorage.getItem('user'));
@@ -48,21 +50,20 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/block",
-    name: "Block/Unblock",
-    rtlName: "ملف تعريفي للمستخدم",
-    icon: BlockIcon,
-    component: UserProfile,
-    layout: "/admin"
-  },
-  {
-    path: "/table",
-    name: "Statistics",
-    rtlName: "قائمة الجدول",
+    path: "/histories",
+    name: "Histories",
     icon: "content_paste",
-    component: TableList,
+    component: ListHistories,
     layout: "/admin"
   },
+  // {
+  //   path: "/table",
+  //   name: "Statistics",
+  //   rtlName: "قائمة الجدول",
+  //   icon: "content_paste",
+  //   component: TableList,
+  //   layout: "/admin"
+  // },
   {
     path: "/typography",
     name: "Comment Management",
@@ -70,7 +71,7 @@ const dashboardRoutes = [
     icon: CommentIcon,
     component: Typography,
     layout: "/admin"
-  },
+  }
   
   // {
   //   path: "/icons",

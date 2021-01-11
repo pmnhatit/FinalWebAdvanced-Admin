@@ -28,13 +28,19 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
+  // form: {
+  //   width: '100%', // Fix IE 11 issue.
+  //   marginTop: theme.spacing(1),
+  // },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  table: {
+    marginBottom: '30px',
+  },
+  page: {
+    overflow: 'auto',
+  }
 }));
 
 
@@ -42,18 +48,23 @@ export default function Profile() {
   const classes = useStyles();
   const {id} = useParams();
   console.log("id1 ",id);
+  const mainPanel = React.createRef();
   //info user
   const token = JSON.parse(localStorage.getItem('token'));
   const [fullName, setFullName] = useState("abc");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [matches, setMatches] = useState(0);
+  const [trophies, setTrophies] = useState(0);
+  const [winRate, setWinRate] = useState(0);
   // const [status, setStatus] = useState("");
   const [blocked, setBlocked] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [open, setOpen] = React.useState(false);
   const history = useHistory();
+
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -94,10 +105,14 @@ export default function Profile() {
     setOpen(false);
   }
 
+//   const asideBody = new PerfectScrollbar('.aside-body', {
+//     suppressScrollX: true
+// });
 
   useEffect(() => {
-    fetch("https://apiadmin-caro.herokuapp.com/user/infouser",{
-      // fetch("http://localhost:3000/user/infouser",{
+    //load data
+    // fetch("https://apiadmin-caro.herokuapp.com/user/infouser",{
+      fetch("http://localhost:3000/user/infouser",{
       method: 'POST',
         headers: {
         Authorization: 'Bearer ' + `${token}`,
@@ -118,6 +133,9 @@ export default function Profile() {
           setEmail(result.infoUser.email);
           setPhone(result.infoUser.phone);
           setBlocked(result.infoUser.blocked);
+          setMatches(result.infoUser.matches);
+          setTrophies(result.infoUser.trophies);
+          setWinRate(result.infoUser.win_rate);
           // console.log("blocked "+blocked)
         },
         // Note: it's important to handle errors here
@@ -146,8 +164,8 @@ export default function Profile() {
     return <div>Loading...</div>;
   } else {
     
-    return (<>
-      <Container component="main" maxWidth="xs">
+    return (<div className={classes.page}>
+      <Container maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
@@ -251,7 +269,8 @@ export default function Profile() {
       </div>
       <Box mt={8}>
       </Box>
+      
     </Container>
-    </>);
+    </div>);
   }
 }
