@@ -14,6 +14,7 @@ import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import TextField from '@material-ui/core/TextField';
+import {Chat} from '../../components/Chatroom/Chat/chat'
 
 import avatar from "assets/img/faces/marc.jpg";
 
@@ -86,9 +87,9 @@ export default function UserProfile() {
       )
   }, [])
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div style={{display:'flex', justifyContent:'center'}}>Error: {error.message}</div>;
   } else if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <div style={{display:'flex', justifyContent:'center'}}>Loading...</div>;
   } else {
   return (
     <div className={classes.page}>
@@ -237,6 +238,7 @@ export default function UserProfile() {
           </Card>
         </GridItem> */}
       </GridContainer>
+      <Chat/>
     </div>
   );
     }

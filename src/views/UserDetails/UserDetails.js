@@ -159,9 +159,9 @@ export default function Profile() {
   blocked ? status="Blocked" : status="Active";
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div style={{display:'flex', justifyContent:'center'}}>Error: {error.message}</div>;
   } else if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <div style={{display:'flex', justifyContent:'center'}}>Loading...</div>;
   } else {
     
     return (<div className={classes.page}>
@@ -219,7 +219,42 @@ export default function Profile() {
             InputProps={{
               readOnly: true,
             }}
-            
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="matches"
+            label="Matches"
+            name="matches"
+            value={matches}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="trophies"
+            label="Trophies"
+            name="trophies"
+            value={trophies}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="win-rate"
+            label="Win Rate"
+            name="win-rate"
+            value={winRate}
+            InputProps={{
+              readOnly: true,
+            }}
           />
           <TextField
             variant="outlined"
@@ -250,10 +285,10 @@ export default function Profile() {
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
       >
-        <DialogTitle id="responsive-dialog-title">{"Block User"}</DialogTitle>
+        <DialogTitle id="responsive-dialog-title">{`${text} user`}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure block this user?
+            {`Are you sure ${text} this user?`}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

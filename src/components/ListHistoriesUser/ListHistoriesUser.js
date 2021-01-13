@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {useHistory} from 'react-router-dom';
-import {useParams} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
+// import {useParams} from 'react-router-dom';
 import {makeStyles } from '@material-ui/core/styles';
 import MUIDataTable from "mui-datatables";
 import Button from "@material-ui/core/Button";
@@ -21,6 +21,8 @@ export default function CustomizedTables(props) {
   const {id} = useParams();
   const token = JSON.parse(localStorage.getItem('token'));
   const [listHistories, setListHistories] = useState([]);
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   const history = useHistory();
   
   const columns = [
@@ -73,6 +75,7 @@ export default function CustomizedTables(props) {
     })
     if(res.status===200){
         console.log("Vo 200OK")
+        setIsLoaded(true);
         const histories = await res.json();
         console.log("histories: "+histories.listHistories);
         let data=[];
@@ -89,21 +92,29 @@ export default function CustomizedTables(props) {
         // console.log("data"+data[0].name)
         // console.log(listUser[0].name);
     }else{
-        const result = await res.json();
-        alert(result.message);
+        // const result = await res.json();
+        // alert(result.message);
+        setIsLoaded(true);
+          setError(error);
     }
   }
   getRes();
   }, [])
-  
-  return(
+
+  if (error) {
+    return <div style={{display:'flex', justifyContent:'center'}}>Error: {error.message}</div>;
+  } else if (!isLoaded) {
+    return <div style={{display:'flex', justifyContent:'center'}}>Loading...</div>;
+  } else {
+    return(
       <div className={classes.page}>
-            <MUIDataTable
-                title={"Match history"}
-                data={listHistories}
-                columns={columns}
-                options={options}
-/>
+        <MUIDataTable
+          title={"Match history"}
+          data={listHistories}
+          columns={columns}
+          options={options}
+        />
       </div>
   );
+  }
 }

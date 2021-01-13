@@ -93,7 +93,8 @@ export default function Admin({ ...rest }) {
         suppressScrollX: true,
         suppressScrollY: false
       });
-      document.body.style.overflow = "hidden";
+      // document.body.style.overflow = "hidden";
+      document.body.style.overflow = "scroll-y";
     }
     window.addEventListener("resize", resizeFunction);
     // Specify how to clean up after this effect:
