@@ -56,7 +56,7 @@ export default function UserProfile() {
   const [matchDate, setMatchDate] = useState("");
 
   useEffect(() => {
-    // fetch("https://apiadmin-caro.herokuapp.com/user/infouser",{
+    // fetch("https://apiadmin-caro.herokuapp.com/history/details",{
       fetch("http://localhost:3000/history/details",{
       method: 'POST',
         headers: {

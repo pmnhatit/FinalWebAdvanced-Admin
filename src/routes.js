@@ -16,21 +16,7 @@
 
 */
 // @material-ui/icons
-// import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
-// import LibraryBooks from "@material-ui/icons/LibraryBooks";
-// import BubbleChart from "@material-ui/icons/BubbleChart";
-// import LocationOn from "@material-ui/icons/LocationOn";
-// import Notifications from "@material-ui/icons/Notifications";
-// import Unarchive from "@material-ui/icons/Unarchive";
-// import Language from "@material-ui/icons/Language";
-// import PersonAddIcon from '@material-ui/icons/PersonAdd';
-// import BlockIcon from '@material-ui/icons/Block';
-// import CommentIcon from '@material-ui/icons/Comment';
-// core components/views for Admin layout
-// import UserProfile from "views/UserProfile/UserProfile.js";
-// import TableList from "views/TableList/TableList.js";
-// import Typography from "views/Typography/Typography.js";
 import ListUser from "./views/ListUser/ListUser";
 import ListHistories from "./views/ListHistories/ListHistories";
 
@@ -56,39 +42,5 @@ const dashboardRoutes = [
     component: ListHistories,
     layout: "/admin"
   },
-  // {
-  //   path: "/table",
-  //   name: "Statistics",
-  //   rtlName: "قائمة الجدول",
-  //   icon: "content_paste",
-  //   component: TableList,
-  //   layout: "/admin"
-  // },
-  // {
-  //   path: "/typography",
-  //   name: "Comment Management",
-  //   rtlName: "طباعة",
-  //   icon: CommentIcon,
-  //   component: Typography,
-  //   layout: "/admin"
-  // }
-  
-  // {
-  //   path: "/icons",
-  //   name: "Icons",
-  //   rtlName: "الرموز",
-  //   icon: BubbleChart,
-  //   component: Icons,
-  //   layout: "/admin"
-  // },
-  // {
-  //   path: "/notifications",
-  //   name: "Notifications",
-  //   rtlName: "إخطارات",
-  //   icon: Notifications,
-  //   component: NotificationsPage,
-  //   layout: "/admin"
-  // },
-  
 ];
 export default dashboardRoutes;

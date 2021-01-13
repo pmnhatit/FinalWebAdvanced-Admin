@@ -50,7 +50,7 @@ export default function Profile() {
   const editProfile = async () => {
     console.log(token);
     // const res = await fetch("https://apiadmin-caro.herokuapp.com/user/edit", {
-    const res = await fetch("https://apiadmin-caro.herokuapp.com/admin/edit", {
+    const res = await fetch("http://localhost:3000/admin/edit", {
       method: 'PUT',
       headers: {
         Authorization: 'Bearer ' + `${token}`,
@@ -68,7 +68,7 @@ export default function Profile() {
         console.log(result);
         // localStorage.setItem('token',JSON.stringify(result.token));
         localStorage.setItem('user',JSON.stringify(result.infoUser));
-        history.push('/admin/home');
+        history.push('/admin/users');
       }else{
         alert(res.message);
       }

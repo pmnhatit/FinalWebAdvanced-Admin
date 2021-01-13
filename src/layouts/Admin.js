@@ -130,7 +130,7 @@ export default function Admin({ ...rest }) {
       
       <Sidebar
         routes={arrayRoutes}
-        logoText={"Creative Tim"}
+        logoText={"Admin caro"}
         logo={logo}
         image={image}
         handleDrawerToggle={handleDrawerToggle}

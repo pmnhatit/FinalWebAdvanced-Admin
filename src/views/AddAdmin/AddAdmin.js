@@ -47,8 +47,8 @@ export default function AddAdmin() {
   
 
   const editUser = async () => {
-    const res = await fetch("https://apiadmin-caro.herokuapp.com/user/addadmin", {
-      // const res = await fetch("http://localhost:3000/admin/addadmin", {
+    // const res = await fetch("https://apiadmin-caro.herokuapp.com/admin/addadmin", {
+      const res = await fetch("http://localhost:3000/admin/addadmin", {
       method: 'POST',
       headers: {
         Authorization: 'Bearer ' + `${token}`,
@@ -124,6 +124,7 @@ export default function AddAdmin() {
             variant="outlined"
             margin="normal"
             fullWidth
+            type="Number"
             id="phone"
             label="Phone Number"
             name="phone"
