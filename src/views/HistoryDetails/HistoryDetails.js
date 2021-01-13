@@ -15,7 +15,7 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import TextField from '@material-ui/core/TextField';
 import {Chat} from '../../components/Chatroom/Chat/chat'
-
+import Game from '../../components/DetailHistory/gamehistory'
 import avatar from "assets/img/faces/marc.jpg";
 
 const styles = {
@@ -238,7 +238,8 @@ export default function UserProfile() {
           </Card>
         </GridItem> */}
       </GridContainer>
-      <Chat/>
+      <Game/>
+     
     </div>
   );
     }
