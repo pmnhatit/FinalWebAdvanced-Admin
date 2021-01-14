@@ -45,12 +45,15 @@ export default function Profile() {
   const [email, setEmail] = useState(user.email);
   const history = useHistory();
 
-  
+  // const handleClickBackHome = (e) =>{
+  //   e.preventDefault();
+  //   history.push('/admin/users');
+  // }
 
   const editProfile = async () => {
     console.log(token);
-    // const res = await fetch("https://apiadmin-caro.herokuapp.com/user/edit", {
-    const res = await fetch("http://localhost:3000/admin/edit", {
+    const res = await fetch("https://apiadmin-caro.herokuapp.com/admin/edit", {
+    // const res = await fetch("http://localhost:3000/admin/edit", {
       method: 'PUT',
       headers: {
         Authorization: 'Bearer ' + `${token}`,
@@ -89,7 +92,8 @@ export default function Profile() {
     }
   }
 
-  return (
+  return (<div>
+    {/* <Button onClick={handleClickBackHome}>Home</Button> */}
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -141,5 +145,6 @@ export default function Profile() {
       <Box mt={8}>
       </Box>
     </Container>
+    </div>
   );
 }

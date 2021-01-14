@@ -47,8 +47,8 @@ export default function AddAdmin() {
   
 
   const editUser = async () => {
-    // const res = await fetch("https://apiadmin-caro.herokuapp.com/admin/addadmin", {
-      const res = await fetch("http://localhost:3000/admin/addadmin", {
+    const res = await fetch("https://apiadmin-caro.herokuapp.com/admin/addadmin", {
+      // const res = await fetch("http://localhost:3000/admin/addadmin", {
       method: 'POST',
       headers: {
         Authorization: 'Bearer ' + `${token}`,

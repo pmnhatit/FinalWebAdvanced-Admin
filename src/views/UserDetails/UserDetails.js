@@ -111,8 +111,8 @@ export default function Profile() {
 
   useEffect(() => {
     //load data
-    // fetch("https://apiadmin-caro.herokuapp.com/user/infouser",{
-      fetch("http://localhost:3000/user/infouser",{
+    fetch("https://apiadmin-caro.herokuapp.com/user/infouser",{
+      // fetch("http://localhost:3000/user/infouser",{
       method: 'POST',
         headers: {
         Authorization: 'Bearer ' + `${token}`,
@@ -169,7 +169,7 @@ export default function Profile() {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Edit Infomation
+          User Infomation
         </Typography>
         <form className={classes.form} >
           <TextField

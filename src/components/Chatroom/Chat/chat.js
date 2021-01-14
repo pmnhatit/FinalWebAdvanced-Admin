@@ -11,8 +11,8 @@ export const Chat = (props) => {
 
   useEffect(()  => {
     const getRes = async ()  =>{
-    const res = await fetch("http://localhost:3000/chat/match-chat",{
-      // const res = await fetch("https://apiadmin-caro.herokuapp.com/chat/match-chat",{
+    // const res = await fetch("http://localhost:3000/chat/match-chat",{
+      const res = await fetch("https://apiadmin-caro.herokuapp.com/chat/match-chat",{
         method: 'POST',
         headers: {
         Authorization: 'Bearer ' + `${token}`,

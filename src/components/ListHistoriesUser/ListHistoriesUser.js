@@ -31,8 +31,7 @@ export default function CustomizedTables(props) {
     // } },
     { name: "id", label:"ID" },
     { name: "date", lable:"Date" },
-    { name: "winner", lable:"Winner" },
-    { name: "loser", lable:"Loser" },
+    { name: "status", lable:"Status" },
     {
       name: "Detail",
       options: {
@@ -62,8 +61,8 @@ export default function CustomizedTables(props) {
 
     useEffect(()  => {
     const getRes = async ()  =>{
-    const res = await fetch("http://localhost:3000/history/historiesuser",{
-    //   const res = await fetch("https://apiadmin-caro.herokuapp.com/user/users",{
+    // const res = await fetch("http://localhost:3000/history/historiesuser",{
+      const res = await fetch("https://apiadmin-caro.herokuapp.com/history/historiesuser",{
         method: 'POST',
         headers: {
         Authorization: 'Bearer ' + `${token}`,
@@ -83,8 +82,7 @@ export default function CustomizedTables(props) {
             data[i]={
               id: histories.listHistories[i].id,  
               date: histories.listHistories[i].date,
-              winner: histories.listHistories[i].winner,
-              loser: histories.listHistories[i].loser
+              status: histories.listHistories[i].status
             }
         }
         // setListUser(users.users);

@@ -71,8 +71,8 @@ export default function CustomizedTables() {
 
     useEffect(()  => {
     const getRes = async ()  =>{
-    const res = await fetch("http://localhost:3000/user/users",{
-      // const res = await fetch("https://apiadmin-caro.herokuapp.com/user/users",{
+    // const res = await fetch("http://localhost:3000/user/users",{
+      const res = await fetch("https://apiadmin-caro.herokuapp.com/user/users",{
         method: 'GET',
         headers: {
         Authorization: 'Bearer ' + `${token}`,

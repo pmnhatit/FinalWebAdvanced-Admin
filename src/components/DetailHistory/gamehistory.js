@@ -47,8 +47,8 @@ function Game() {
     const token=JSON.parse(localStorage.getItem('token'));
     useEffect(()  => {
         const getRes = async ()  =>{
-        const res = await fetch("http://localhost:3000/move/history-move",{
-          // const res = await fetch("https://apiadmin-caro.herokuapp.com/user/users",{
+        // const res = await fetch("http://localhost:3000/move/history-move",{
+          const res = await fetch("https://apiadmin-caro.herokuapp.com/move/history-move",{
             method: 'POST',
             headers: {
             Authorization: 'Bearer ' + `${token}`,
