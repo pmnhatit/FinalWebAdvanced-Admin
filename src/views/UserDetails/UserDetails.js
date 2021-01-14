@@ -78,8 +78,8 @@ export default function Profile() {
   };
 
   const ChangeStatus = async () =>{
-    // const res = await fetch("https://apiadmin-caro.herokuapp.com/user/changeblock", {
-      const res = await fetch("http://localhost:3000/user/changeblock", {
+    const res = await fetch("https://apiadmin-caro.herokuapp.com/user/changeblock", {
+      // const res = await fetch("http://localhost:3000/user/changeblock", {
       method: 'POST',
       headers: {
         Authorization: 'Bearer ' + `${token}`,
